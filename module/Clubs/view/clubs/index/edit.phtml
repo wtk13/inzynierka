@@ -1,0 +1,69 @@
+<?php $this->headScript()->appendFile($this->basePath() . '/js/validation.js'); ?>
+<?php $this->headScript()->appendFile($this->basePath() . '/uploadify/jquery.uploadify.min.js'); ?>
+<?php $this->headLink()->appendStylesheet($this->basePath() . '/uploadify/uploadify.css') ?>
+<script>	
+	$(function() {
+    	$('#photo').uploadify({
+	        'swf'      : '/uploadify.swf',
+	        'uploader' : '/clubs/uploadifyAjax',
+	        'checkExisting' : '/clubs/checkExistPhotoAjax',
+	        'multi'    : false,
+	        'fileTypeExts' : '*.jpg; *.png',
+	        'onUploadSuccess' : function(file, data, response) {
+	        	$('#photo').hide();
+	        	$('#photo-view img').attr('src', '/img/clubs/' + file.name);
+	        	$('#file').val(file.name);
+			}
+	    });
+	});
+</script>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="text-center">Edytowanie klubu</h3>		
+	</div>
+	<div class="panel-body">
+		<?php  $form->setAttribute('action', $this->url(
+			     'clubs',
+			     array(
+			         'action' => 'edit',
+			         'id'     => $this->id,
+			    )
+		 )); ?>
+		<?php $form->prepare(); ?>
+		
+		<?php echo $this->form()->openTag($form);?>
+		<?php echo $this->formHidden($form->get('id'));?>
+		<?php echo $this->formHidden($form->get('file'));?>
+		<div class="form-group">
+			<div class="col-md-10 col-md-offset-1">			
+				<?php echo $this->formLabel($form->get('name'));?>	
+			</div>	
+			<div class="col-md-6 col-md-offset-1">
+				<?php echo $this->formElement($form->get('name'));?>
+			</div>
+			<div class="col-md-4 ">
+				<div class="alert alert-danger alert-dismissable text-center" id="alert1" style="display: none;" >				  
+				  Nazwa nie może być pusta!
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10 col-md-offset-1">			
+				<?php echo $this->formLabel($form->get('photo'));?>	
+			</div>
+			<div class="col-md-6 col-md-offset-1">
+				<?php echo $this->formElement($form->get('photo'));?>
+			</div>			
+			<div class="col-md-10 col-md-offset-1" id="photo-view">
+				<?php if (!empty($photo)): ?>
+					<img src="/img/clubs/<?php echo $photo; ?>" alt="">
+				<?php endif; ?>
+			</div>					
+		</div>		
+		<div class="col-md-10 col-md-offset-1 text-right">				
+			<a class="btn btn-danger" href="/clubs">Anuluj</a>	
+				<?php echo $this->formRow($form->get('submit'));?>						
+		</div>
+		<?php echo $this->form()->closeTag(); ?>		
+	</div>
+</div>

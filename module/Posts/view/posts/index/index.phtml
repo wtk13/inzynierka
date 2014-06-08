@@ -1,0 +1,69 @@
+<?php $this->headLink()->appendStylesheet('/css/popup.css'); ?>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="text-center">Aktualności</h3>
+    <a class="btn btn-success btn-sm" href="/posts/add"><span class="glyphicon glyphicon-plus"></span> Nowa</a>
+  </div>
+  <div class="panel-body">
+    <div class="col-sm-8 col-sm-offset-2">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Tytuł</th>   
+            <th><div class="text-center">Opcje</div></th>         
+          </tr>
+        </thead>
+          <?php foreach ($this->paginator as $post): ?>
+          <?php $post->name = str_replace('_', ' ', $post->name);  ?>
+            <tr>
+              <td><?php echo $this->escapeHtml($post->name);?></td>
+              <td>
+              <div class="pull-right">          
+                <?php if ($post->active == 1): ?>               
+                  <a data-toggle="tooltip" data-placement="top" title="Publikacja" class="ajax-publish btn btn-success btn-xs" href="#" id="<?php echo $post->id; ?>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <?php else: ?>                  
+                  <a data-toggle="tooltip" data-placement="top" title="Publikacja" class="ajax-publish btn btn-danger btn-xs" href="#" id="<?php echo $post->id; ?>"><span class="glyphicon glyphicon-eye-close"></span></a>
+                <?php endif; ?>       
+                              
+                <a href='/posts/edit/<?php echo $post->id;?>' class="btn btn-warning btn-xs" ><span class="glyphicon glyphicon-edit"></span> Edycja</a>                
+                <a id="<?php echo $post->id; ?>" class="delete-ajax btn btn-danger btn-xs" href="#popup" data-toggle="modal" data-target="#popup" ><span class="glyphicon glyphicon-trash"></span> Usuń</a>                
+              </div>            
+            </td>                          
+            </tr>
+          <?php endforeach; ?>
+      </table>
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <?php 
+          echo $this->paginationControl($this->paginator, 'Sliding', 'search_pagination.phtml', array('route' => 'posts/paginator')); 
+        ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade in" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          <div class="modal-header">
+            <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
+            <h3 id="modalLabel">Usuwanie</h3>            
+          </div> 
+          <div class="modal-body">
+        	<p>Czy na pewno chcesz usunąć ten post?</p>
+     	 </div>         
+            <div class="modal-footer">     	
+            		<img id="loader" src="/img/25.gif" style="display:none" class="pull-left"/>	
+            		<div class="btn-group">           	
+	              	<button class="btn btn-danger " data-dismiss="modal" aria-hidden="true">Nie</button>
+	              	<button class="ok-delete btn btn-success ">Tak</button>  
+              	</div>            
+            </div>
+          </div>
+        </div>
+      </div>
+
+<script type="text/javascript">
+    $(function(){
+       $('a').tooltip();
+    });
+</script>

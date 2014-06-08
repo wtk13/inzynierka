@@ -1,0 +1,61 @@
+<?php $this->headLink()->appendStylesheet('/css/popup.css'); ?>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="text-center">Kluby</h3>
+		<a class="btn btn-success btn-sm" href="/clubs/add"><span class="glyphicon glyphicon-plus"></span> Nowy</a>
+	</div>
+	<div class="panel-body">	
+	<div class="col-md-8 col-md-offset-2">
+		<table class="table table-hover">
+			<thead>
+				<tr>				
+					<th>Nazwa</th>		
+					<th>Herb</th>
+					<th><div class="text-center">Opcje</div></th>				
+				</tr>
+			</thead>
+			<?php foreach($this->clubs as $club): ?>
+				<tr>
+					<td><?php echo $club->name; ?></td>
+					<td>						
+						<?php if (!is_null($club->file)): ?>
+							<span class="glyphicon glyphicon-ok"></span>
+						<?php else: ?>
+							<span class="glyphicon glyphicon-remove"></span>
+						<?php endif ?>
+					</td>
+					<td>
+						<div class="pull-right"> 			
+							<a href='/clubs/edit/<?php echo $club->id;?>' class="btn btn-warning btn-xs" ><span class="glyphicon glyphicon-edit"></span> Edycja</a> 			
+							<a id='<?php echo $club->id;?>' href="#popup" data-toggle="modal" data-target="#popup" class="delete-ajax-club btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Usuń</a>
+						</div>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+	</div>
+	
+</div>
+</div>
+
+
+<div class="modal fade in" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          <div class="modal-header">
+            <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
+            <h3 id="modalLabel">Usuwanie</h3>            
+          </div> 
+          <div class="modal-body">
+        	<p>Czy na pewno chcesz usunąć ten klub?</p>
+     	 </div>         
+            <div class="modal-footer">     	
+            		<img id="loader" src="/img/25.gif" style="display:none" class="pull-left"/>	
+            		<div class="btn-group">           	
+	              	<button class="btn btn-danger " data-dismiss="modal" aria-hidden="true">Nie</button>
+	              	<button class="ok-delete-club btn btn-success ">Tak</button>  
+              	</div>            
+            </div>
+          </div>
+        </div>
+      </div>

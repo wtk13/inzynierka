@@ -1,0 +1,21 @@
+body { padding-top: 70px; }
+
+.form-control, #cke_textarea, input[type="file"]{
+	margin-bottom: 20px;
+}
+
+.alert {
+	padding: 6px;
+ 	margin-bottom: 0px; 
+}
+
+#photo-view img{
+	max-width: 250px;
+	max-height: 167px;
+}
+
+@media screen and (max-width: 768px){
+	.form-control, #cke_textarea{
+		margin-bottom: 0px;
+	}
+}

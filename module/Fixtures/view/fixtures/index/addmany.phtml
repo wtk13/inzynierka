@@ -1,0 +1,57 @@
+<?php $this->headScript()->appendFile($this->basePath() . '/js/validation.js'); ?>
+<?php $this->headScript()->appendFile($this->basePath() . '/js/ajax-fix.js'); ?>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="text-center">Dodawanie meczów do terminarza</h3>
+	</div>
+	<div class="panel-body">
+		<?php // $form->setAttribute('action', $this->url('fixtures', array('action' => 'addmany'))); ?>
+		<?php $form->prepare(); ?>
+		<?php echo $this->form()->openTag($form);?>
+		<div class="form-group">
+			<div class="col-md-10 col-md-offset-1">			
+				<?php echo $this->formLabel($form->get('round'));?>	
+			</div>	
+			<div class="col-md-2 col-md-offset-1">
+				<?php echo $this->formElement($form->get('round'));?>
+			</div>
+			<div class="col-md-3">
+				<div class="alert alert-danger alert-dismissable text-center" id="alert_fix" style="display: none;" >				  
+				  Musisz podać numer rundy!
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="alert alert-danger alert-dismissable text-center" id="alert_content" style="display: none;" >				  
+				  Źle podane drużyny!
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10 col-md-offset-1">	
+				<?php echo $this->formLabel($form->get('content'));?>	
+			</div>
+			<div class="col-md-5 col-md-offset-1">
+				<?php echo $this->formElement($form->get('content'));?>			
+			</div>
+			<div class="col-md-5">
+				<div class="well">
+					<h3 class="text-center">Istrukcja</h3>
+					<p>Wpisz nazwę gospodarza, pauze (-), nazwę gościa. Możesz wpisywać kilka lini.</p>
+					<p>Przykład: </br>
+						Real Madryt - Barcelona </br>
+						Inter Mediolan - Borussia Dortmund </br>
+						Real Madryt - Barcelona </br>
+						Inter Mediolan - Borussia Dortmund
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10 col-md-offset-1 text-right">	
+			<span><img src="/img/25.gif" alt="load" id="loader_fix" style="display: none;"></span>
+			<a class="btn btn-danger" href="/fixtures">Anuluj</a>	
+			<a href="#" class="btn btn-success" id="submit_fix">Dodaj</a>						
+		</div>
+		<?php echo $this->form()->closeTag(); ?>
+	</div>	
+</div>
